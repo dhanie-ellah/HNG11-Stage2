@@ -11,7 +11,11 @@ import React, { useEffect, useState } from "react";
 // import P10 from "../Assets/Image 10.png";
 // import P11 from "../Assets/Image 11.png";
 // import P12 from "../Assets/Image 12.png";
+import HeartFilled from '../Assets/Icons/heart filled.png'
+import HeartOutline from '../Assets/Icons/heart outline.png'
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 const ProductsList = () => {
   // const products = [
@@ -119,16 +123,37 @@ const ProductsList = () => {
       });
   }, []);
 
-    const productList = data.map((single) => (
-    <div className=" w-[32%] rounded-xl overflow-hidden h-auto p-3 border-[0.5px] border-ash text-xs flex flex-col gap-2 lg:w-[48%] sm:w-full" key={single.key}>
+  const [like, setLike] = useState(false);
+
+  const productList = data.map((single) => (
+    <div
+      className=" w-[32%] rounded-xl overflow-hidden h-auto p-3 border-[0.5px] border-ash text-xs flex flex-col gap-2 lg:w-[48%] sm:w-full"
+      key={single.key}
+    >
       {/* image */}
-      <div className=" rounded-lg overflow-hidden sm:w-full">
-        <img src={`https://api.timbu.cloud/images/${single?.photos[0]?.url}`} alt={single.name} className="w-full" />
+      <div className=" rounded-lg overflow-hidden sm:w-full relative">
+        <img
+          src={`https://api.timbu.cloud/images/${single?.photos[0]?.url}`}
+          alt={single.name}
+          className="w-full"
+        />
+
+        {/* wishlist and add to cart */}
+        <button className=" flex items-center justify-center gap-1 bg-white p-2 rounded-full absolute z-10 right-4 top-6 shadow-md" onClick={()=>{setLike(!like)}}>
+          <img src={`${like ? HeartFilled : HeartOutline}`} alt="" />
+        </button>
+
+        <button className=" flex items-center gap-1 bg-white px-4 py-2 rounded-lg absolute z-10 right-4 bottom-6 shadow-md">
+          <FontAwesomeIcon icon={faCartShopping} />
+          <p>ADD</p>
+        </button>
       </div>
+
+      
       {/* name and price */}
       <div className=" flex justify-between items-center">
         <p>{single.name}</p>
-        <p className=" font-extrabold">{`${single?.current_price[0]?.LRD[0]}`}</p>
+        <p className=" font-extrabold">${`${single?.current_price[0]?.LRD[0]}`}</p>
       </div>
       {/* colours */}
       <div className=" flex gap-1">
@@ -152,7 +177,7 @@ const ProductsList = () => {
   // }, []);
 
   return (
-    <div className=" flex flex-wrap justify-between w-[75%] p-5 gap-4 sm:flex-col sm:w-full">
+    <div className=" flex flex-wrap justify-between w-[100%] gap-4 sm:flex-col sm:w-full">
       {/* {product} */}
       {productList}
     </div>

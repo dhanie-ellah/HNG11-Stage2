@@ -5,6 +5,7 @@ import NavBottom from '../Components/Nav/NavBottom'
 import Sidebar from '../Components/Sidebar'
 import ProductsList from '../Components/ProductsList'
 import Footer from '../Components/Footer'
+import Pagination from '../Components/Pagination'
 
 const Products = () => {
   return (
@@ -18,7 +19,10 @@ const Products = () => {
       {/* **********middle********** */}
       <section className=' flex justify-between px-10 lg:px-5 sm:px-2'>
         <Sidebar/>
-        <ProductsList/>
+        <div className=' w-[75%] flex flex-col gap-[2.5rem] sm:w-full p-5'>
+          <ProductsList/>
+          <Pagination/>
+        </div>
       </section>
       <Footer/>
     </div>
